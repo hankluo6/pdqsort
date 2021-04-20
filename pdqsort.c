@@ -229,9 +229,13 @@ bool partial_insertion_sort(void *_begin, void *_end, size_t size, cmp_func_t cm
             limit += (cur - sift) / size;
         }
        
-        if (limit > partial_insertion_sort_limit)
+        if (limit > partial_insertion_sort_limit) {
+            free(tmp);
             return false;
+        }
     }
+
+    free(tmp);
     return true;
 }
 
@@ -608,7 +612,7 @@ void pdqsort(void *base,
     pdqsort_loop(base, base + idx(num), size, cmp_func, __log2(num), true);
 }
 
-#define TEST_LEN 250000
+#define TEST_LEN 10000
 
 int main()
 {
